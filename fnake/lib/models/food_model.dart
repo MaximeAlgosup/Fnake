@@ -1,14 +1,24 @@
+import 'dart:math';
 
 class FoodModel {
-  const FoodModel({
-    required this.posX,
-    required this.posY,
+  FoodModel({
     required this.value,
   });
 
-  final int posX;
-  final int posY;
+  Random random = Random();
+  int posX = 0;
+  int posY = 0;
   final int value;
+
+  void generateNewPosition() {
+    posX = random.nextInt(10);
+    posY = random.nextInt(10);
+  }
+
+  void setPositon(int x, int y) {
+    posX = x;
+    posY = y;
+  }
 
   int getX() {
     return posX;

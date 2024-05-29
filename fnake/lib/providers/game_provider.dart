@@ -1,4 +1,5 @@
 // Flutter base packages
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Fnake packages
@@ -20,7 +21,7 @@ class GameNotifier extends StateNotifier<GameModel> {
         snake: SnakeModel(tiles: [
           TileModel(posX: 5, posY: 5, width: 20, height: 20)
         ]),
-        food: const FoodModel(posX: 0, posY: 0, value: 10),
+        food: FoodModel(value: 10),
         score: 0,
       )
   );
@@ -34,14 +35,27 @@ class GameNotifier extends StateNotifier<GameModel> {
         state.board.getTile(5, 6),
         state.board.getTile(5, 7),
       ]),
-      food: const FoodModel(posX: 0, posY: 0, value: 10),
+      food: FoodModel(value: 10),
       score: 0,
     );
-    state.board.getTile(5, 7).setSnake(true);
-    state.board.getTile(5, 6).setSnake(true);
-    state.board.getTile(5, 5).setSnakeHead(true);
+    state.boardUpdate();
 
     state.board.getTile(0, 0).setFood(true);
+  }
+
+  void moveSnake(Direction direction) {
+    state.snake!.changeDirection(direction);
+    bool res = state.snake!.move();
+    if (!res) {
+      debugPrint('Game Over');
+      state.restartGame();
+    }
+    else {
+      state.boardUpdate();
+    }
+    state = state.copyWith(
+      direction: direction,
+    );
   }
 }
 

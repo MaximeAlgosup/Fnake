@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fnake/enums/direction_enum.dart';
-import 'package:fnake/models/snake_model.dart';
+import 'package:fnake/providers/game_provider.dart';
 
 class ArrowWidget extends StatelessWidget {
   final Direction direction;
-  final SnakeModel? snake;
+  final WidgetRef ref;
 
-  const ArrowWidget({super.key, required this.direction, required this.snake});
+  const ArrowWidget({super.key, required this.direction, required this.ref});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(snake != null){
-          snake!.changeDirection(direction);
-          snake!.move();
-        }
+        ref.read(gameNotifier.notifier).moveSnake(direction);
       },
       child: Container(
         width: 50,

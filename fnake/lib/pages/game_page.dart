@@ -33,19 +33,19 @@ class GamePage extends ConsumerWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[ArrowWidget(direction: Direction.up, snake: game.getSnake)],
+          children: <Widget>[ArrowWidget(direction: Direction.up, ref: ref)],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ArrowWidget(direction: Direction.left, snake: game.getSnake),
+            ArrowWidget(direction: Direction.left, ref: ref),
             const SizedBox(width: 54),
-            ArrowWidget(direction: Direction.right, snake: game.getSnake),
+            ArrowWidget(direction: Direction.right, ref: ref),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[ArrowWidget(direction: Direction.down, snake: game.getSnake)],
+          children: <Widget>[ArrowWidget(direction: Direction.down, ref: ref)],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
