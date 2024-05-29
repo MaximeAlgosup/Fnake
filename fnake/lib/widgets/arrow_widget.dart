@@ -13,7 +13,7 @@ class ArrowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ref.read(gameNotifier.notifier).moveSnake(direction);
+        ref.read(gameNotifier.notifier).changeDirection(direction);
       },
       child: Container(
         width: 50,

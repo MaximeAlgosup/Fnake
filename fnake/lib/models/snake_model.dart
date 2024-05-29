@@ -40,7 +40,6 @@ class SnakeModel {
   }
 
   TileModel getHead() {
-    debugPrint('Snake size: ${tiles.length}');
     return tiles[0];
   }
 
@@ -76,7 +75,6 @@ class SnakeModel {
     // check if the snake eats itself
     for (int i = 1; i < newTiles.length; i++) {
       if (newTiles[i].getX() == newTiles[0].getX() && newTiles[i].getY() == newTiles[0].getY()) {
-        debugPrint('Snake eats itself');
         return false;
       }
     }

@@ -1,6 +1,3 @@
-// Flutter base packages
-import 'package:flutter/material.dart';
-
 // Fnake packages
 import 'package:fnake/models/board_model.dart';
 import 'package:fnake/models/snake_model.dart';
@@ -17,13 +14,15 @@ class GameModel {
     required this.direction,
     required this.food,
     required this.score,
+    required this.isStarted,
   });
 
   final BoardModel board;
   SnakeModel? snake;
   final Direction direction;
   final FoodModel food;
-  final int score;
+  int score;
+  bool isStarted = false;
 
   SnakeModel get getSnake => snake!;
 
@@ -33,6 +32,7 @@ class GameModel {
     Direction? direction,
     FoodModel? food,
     int? score,
+    bool? isStarted,
   }) {
     return GameModel(
       board: board ?? this.board,
@@ -40,6 +40,7 @@ class GameModel {
       direction: direction ?? this.direction,
       food: food ?? this.food,
       score: score ?? this.score,
+      isStarted: isStarted ?? this.isStarted,
     );
   }
 
@@ -52,6 +53,17 @@ class GameModel {
     food.setPositon(0, 0);
     board.getTile(food.getX(), food.getY()).setFood(true);
     boardUpdate();
+    isStarted = false;
+  }
+
+  void clearBoard() {
+    for(int i = 0; i < board.nbColumns; i++) {
+      for(int j = 0; j < board.nbRows; j++) {
+        board.tileList[i][j].setSnake(false);
+        board.tileList[i][j].setSnakeHead(false);
+        board.tileList[i][j].setFood(false);
+      }
+    }
   }
 
   void boardUpdate() {
@@ -74,6 +86,8 @@ class GameModel {
       board.getTile(food.getX(), food.getY()).setFood(false);
       food.generateNewPosition();
       board.getTile(food.getX(), food.getY()).setFood(true);
+      // Increase score
+      score += food.value;
     }
   }
 }

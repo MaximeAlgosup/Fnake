@@ -23,6 +23,7 @@ class GameNotifier extends StateNotifier<GameModel> {
         ]),
         food: FoodModel(value: 10),
         score: 0,
+        isStarted: false,
       )
   );
 
@@ -37,25 +38,39 @@ class GameNotifier extends StateNotifier<GameModel> {
       ]),
       food: FoodModel(value: 10),
       score: 0,
+      isStarted: true,
     );
     state.boardUpdate();
 
     state.board.getTile(0, 0).setFood(true);
   }
 
-  void moveSnake(Direction direction) {
-    state.snake!.changeDirection(direction);
+  void stopGame() {
+    state.clearBoard();
+    state = state.copyWith(
+      isStarted: false,
+    );
+  }
+
+  void moveSnake() {
+    if (!state.isStarted) {
+      return;
+    }
     bool res = state.snake!.move();
     if (!res) {
       debugPrint('Game Over');
       state.restartGame();
+      state.clearBoard();
     }
     else {
       state.boardUpdate();
     }
     state = state.copyWith(
-      direction: direction,
     );
+  }
+
+  void changeDirection(Direction newDirection) {
+    state.snake!.changeDirection(newDirection);
   }
 }
 

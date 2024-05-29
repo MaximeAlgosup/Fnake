@@ -12,15 +12,19 @@ class GamePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     GameModel game = ref.watch(gameNotifier);
+
+    String playButtonText(GameModel game) {
+      return game.isStarted ? 'Stop' : 'Start';
+    }
     // ref.read(gameNotifier.notifier).startGame();
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(50.0),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(50.0),
           child: Center(
             child: Text(
-              'Fnake',
-              style: TextStyle(
+              "Score: ${game.score}",
+              style: const TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -29,7 +33,7 @@ class GamePage extends ConsumerWidget {
           )),
       body: Column(children: <Widget>[
         Expanded(
-          child: BoardWidget(board: game.board),
+          child: BoardWidget(board: game.board, ref: ref),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +57,7 @@ class GamePage extends ConsumerWidget {
             Container(
               margin: const EdgeInsets.only(top: 50),
               child: ElevatedButton(
-                onPressed: () => ref.read(gameNotifier.notifier).startGame(),
+                onPressed: () => game.isStarted ? ref.read(gameNotifier.notifier).stopGame() : ref.read(gameNotifier.notifier).startGame(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   side: const BorderSide(
@@ -62,9 +66,9 @@ class GamePage extends ConsumerWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 ),
-                child: const Text(
-                    'Start',
-                    style: TextStyle(
+                child: Text(
+                    playButtonText(game),
+                    style: const TextStyle(
                       color: Colors.blueGrey,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
