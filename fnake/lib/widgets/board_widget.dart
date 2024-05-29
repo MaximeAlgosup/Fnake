@@ -25,22 +25,33 @@ class _BoardWidgetState extends State<BoardWidget> {
   void initState() {
     super.initState();
     Timer.periodic(const Duration(milliseconds: 400), (timer) {
-        widget.ref.read(gameNotifier.notifier).moveSnake();
+      widget.ref.read(gameNotifier.notifier).moveSnake();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: board.nbColumns,
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.blueGrey,
+        border: Border(
+          left: BorderSide(color: Colors.black, width: 4),
+          right: BorderSide(color: Colors.black, width: 4),
+          bottom: BorderSide(color: Colors.black, width: 4),
+        ),
       ),
-      itemBuilder: (context, index) {
-        return TileWidget(
-          tile: board.tileList[index % board.nbColumns][index ~/ board.nbColumns],
-        );
-      },
-      itemCount: board.nbRows * board.nbColumns,
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: board.nbColumns,
+        ),
+        itemBuilder: (context, index) {
+          return TileWidget(
+            tile: board.tileList[index % board.nbColumns]
+                [index ~/ board.nbColumns],
+          );
+        },
+        itemCount: board.nbRows * board.nbColumns,
+      ),
     );
   }
 }

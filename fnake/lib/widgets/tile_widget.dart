@@ -23,8 +23,10 @@ class TileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 0.5),
         color: getTileColor(),
+        borderRadius: ((!tile.isSnakeHead && tile.isSnake) || tile.isFood)
+            ? BorderRadius.circular(20)
+            : BorderRadius.circular(10),
       ),
     );
   }
