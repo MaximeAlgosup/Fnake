@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
-      home: GamePage(),
+      home: const GamePage(),
     );
   }
 }

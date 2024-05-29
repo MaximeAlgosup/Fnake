@@ -9,4 +9,12 @@ class FoodModel {
   final int posX;
   final int posY;
   final int value;
+
+  int getX() {
+    return posX;
+  }
+
+  int getY() {
+    return posY;
+  }
 }
